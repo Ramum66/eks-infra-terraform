@@ -1,0 +1,11 @@
+resource "null_resource" "postchecks" {
+  provisioner "local-exec" {
+    command = "/bin/bash postinstall.sh ${var.cluster_name} ${var.region}"
+  }
+
+  depends_on = [
+    aws_eks_node_group.public-nodes,
+    aws_eks_node_group.private-nodes,
+    aws_eks_cluster.ram-eks-cluster
+  ]
+}
